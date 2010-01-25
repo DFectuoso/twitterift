@@ -13,11 +13,12 @@ import Helpers._
 class Boot {
   def boot {
     // where to search snippet
-    LiftRules.addToPackages("blank")
-
-    // Build SiteMap
-    val entries = Menu(Loc("Home", List("index"), "Home")) :: Nil
-    LiftRules.setSiteMap(SiteMap(entries:_*))
+    LiftRules.addToPackages("twitterift")
+    
+    LiftRules.rewrite.prepend(NamedPF("List") {
+        case RewriteRequest(ParsePath("list" :: username :: Nil, _, _, _), _, _) =>
+          RewriteResponse("list" :: Nil, Map("username" -> username ))
+    })
   }
 }
 
