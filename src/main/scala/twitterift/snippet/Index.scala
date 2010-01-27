@@ -6,6 +6,7 @@ import _root_.net.liftweb.util.Helpers._
 import _root_.net.liftweb.http.{S,SHtml}
 import twitterift.model._
 
+
 class IndexSnippet {
   def render(xhtml:NodeSeq):NodeSeq = {
     var tempValue: String = "" 

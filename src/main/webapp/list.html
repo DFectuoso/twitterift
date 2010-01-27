@@ -4,6 +4,9 @@
       #who img {
         height:48px;  
         width:48px;  
+        position:absolute;
+        top:-100px;
+        left:-100px;
       }
     </style>  
   </head>
@@ -13,4 +16,30 @@
     <div id="form">
       <lift:IndexSnippet.friends/>
     </div>
+    
+    
+    
+    <script type="text/javascript">
+    // <![CDATA[
+      function funWithTwitter(){
+        var maxWidth = 1300;
+        var maxHeight = 500;
+        var maxStatuses = 0;
+        var maxFollowers = 0;
+        for(var u in user) {
+          if((parseInt(user[u].statuses)) > maxStatuses){
+            maxStatuses = parseInt(user[u].statuses);            
+          }
+          if((parseInt(user[u].followers)) > maxFollowers){
+            maxFollowers = parseInt(user[u].followers);            
+          }
+        }
+
+        for(var u in user){
+          document.getElementById(u).style.top =  (((parseInt(user[u].followers))/maxFollowers) * maxHeight) + "px";
+          document.getElementById(u).style.left = (((parseInt(user[u].statuses))/maxStatuses)   * maxWidth ) + "px";
+        }
+      }
+      // ]]>
+    </script>
 </lift:surround>

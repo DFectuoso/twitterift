@@ -38,7 +38,8 @@ class ListActor extends CometActor {
       <div id="messages">
       </div>
       <div id="who">
-      </div>
+      </div> 
+      { Script(JsRaw("var user = new Array();;")) }
     </span>
   }
 
@@ -57,8 +58,9 @@ class ListActor extends CometActor {
       }
     case TwitterSeq(seq) => {
         this ! Available
-        var images = seq.map((u)=> <img src={u.imgUrl}/>)
-        partialUpdate(AppendHtml("who", {images}))
+        var images = seq.map((u)=> <img id={u.id} src={u.imgUrl}/>)
+        var userArray = seq.map((u)=> JsRaw("user[\""+u.id+"\"] = eval(" + u.toJs +")"))
+        partialUpdate(AppendHtml("who", {images}) & userArray.foldLeft(Noop)(_&_) & JsRaw("funWithTwitter();"))
       }
   }
 
