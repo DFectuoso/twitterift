@@ -1,0 +1,16 @@
+<lift:surround with="default" at="content">
+  <head>
+    <style>
+      #who img {
+        height:48px;  
+        width:48px;  
+      }
+    </style>  
+  </head>
+
+
+    <h2>This are your twitter friends:</h2>
+    <div id="form">
+      <lift:IndexSnippet.friends/>
+    </div>
+</lift:surround>
