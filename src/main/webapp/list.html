@@ -21,6 +21,9 @@
     
     <script type="text/javascript">
     // <![CDATA[
+    
+      var user = new Array();
+      
       function funWithTwitter(){
         var maxWidth = 1300;
         var maxHeight = 500;
@@ -34,8 +37,16 @@
             maxFollowers = parseInt(user[u].followers);            
           }
         }
-
+        
         for(var u in user){
+          var ref = document.getElementById(u)
+          if(ref == null){
+            var img = document.createElement('img');
+            img.setAttribute('src', user[u].imgUrl);
+            img.setAttribute('id', u);
+            document.getElementById("who").appendChild(img);
+            ref = document.getElementById(u);
+          }
           document.getElementById(u).style.top =  (((parseInt(user[u].followers))/maxFollowers) * maxHeight) + "px";
           document.getElementById(u).style.left = (((parseInt(user[u].statuses))/maxStatuses)   * maxWidth ) + "px";
         }

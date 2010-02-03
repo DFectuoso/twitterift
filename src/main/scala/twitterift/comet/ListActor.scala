@@ -20,8 +20,6 @@ import JqJE._
 import twitterift.model._
 
 class ListActor extends CometActor {  
-  override def defaultPrefix = Full("list")
-
   override def localSetup {
     this ! Available
     this ! Request("-1")
@@ -31,15 +29,10 @@ class ListActor extends CometActor {
   override def localShutdown {
     super.localShutdown
   }
-  
-  
+    
   def render =  {
     <span>
-      <div id="messages">
-      </div>
-      <div id="who">
-      </div> 
-      { Script(JsRaw("var user = new Array();;")) }
+      <div id="who" />
     </span>
   }
 
@@ -57,10 +50,9 @@ class ListActor extends CometActor {
         println("WE HAVE AVAILABLE:"+ available)
       }
     case TwitterSeq(seq) => {
-        this ! Available
-        var images = seq.map((u)=> <img id={u.id} src={u.imgUrl}/>)
         var userArray = seq.map((u)=> JsRaw("user[\""+u.id+"\"] = eval(" + u.toJs +")"))
-        partialUpdate(AppendHtml("who", {images}) & userArray.foldLeft(Noop)(_&_) & JsRaw("funWithTwitter();"))
+        partialUpdate(userArray.foldLeft(Noop)(_&_) & JsRaw("funWithTwitter();"))
+        this ! Available
       }
   }
 
